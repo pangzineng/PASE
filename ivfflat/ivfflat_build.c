@@ -17,6 +17,7 @@
 
 #include "access/genam.h"
 #include "access/generic_xlog.h"
+#include "access/tableam.h"
 #include "catalog/index.h"
 #include "miscadmin.h"
 #include "storage/bufmgr.h"
@@ -484,7 +485,7 @@ IvfflatCentroidsBuildCallback(Relation index, HeapTuple htup, Datum *values,
   buildState->clustering->count ++;
 }
 
-// Per-tuple callback from IndexBuildHeapScan.
+// Per-tuple callback from table_index_build_scan.
 static void
 IvfflatBuildCallback(Relation index, HeapTuple htup, Datum *values,
     bool *isnull, bool tupleIsAlive, void *state) {
@@ -620,7 +621,7 @@ ivfflat_build(Relation heap, Relation index, IndexInfo *indexInfo) {
     buildState.clustering->count = 0;
     // train clusters by kmeans
     MemoryContextSwitchTo(oldCtx);
-    reltuples = IndexBuildHeapScan(heap, index, indexInfo, true,
+    reltuples = table_index_build_scan(heap, index, indexInfo, true, false,
         IvfflatCentroidsBuildCallback, (void *) &buildState, NULL);
     oldCtx = MemoryContextSwitchTo(buildState.init_ctx);
     buildState.clustering->k_pos = (int *) palloc0(
@@ -651,7 +652,7 @@ ivfflat_build(Relation heap, Relation index, IndexInfo *indexInfo) {
 
   // Do the heap scan
   elog(NOTICE, "begin, ivfflat index building");
-  reltuples = IndexBuildHeapScan(heap, index, indexInfo, true,
+  reltuples = table_index_build_scan(heap, index, indexInfo, true, false,
       IvfflatBuildCallback, (void *) &buildState, NULL);
 
   // Flush last page if needed in inverted list

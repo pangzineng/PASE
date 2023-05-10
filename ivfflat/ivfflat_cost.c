@@ -28,11 +28,7 @@ ivfflat_costestimate(PlannerInfo *root, IndexPath *path, double loop_count,
     Selectivity *indexSelectivity, double *indexCorrelation,
     double *indexPages) {
   IndexOptInfo *index = path->indexinfo;
-  List	   *qinfos;
   GenericCosts costs;
-
-  // Do preliminary analysis of indexquals
-  qinfos = deconstruct_indexquals(path);
 
   MemSet(&costs, 0, sizeof(costs));
 
@@ -40,7 +36,7 @@ ivfflat_costestimate(PlannerInfo *root, IndexPath *path, double loop_count,
   costs.numIndexTuples = index->tuples;
 
   // Use generic estimate
-  genericcostestimate(root, path, loop_count, qinfos, &costs);
+  genericcostestimate(root, path, loop_count, &costs);
 
   *indexStartupCost = costs.indexStartupCost;
   *indexTotalCost = costs.indexTotalCost;

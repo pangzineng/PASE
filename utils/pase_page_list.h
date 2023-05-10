@@ -31,7 +31,7 @@
 #include "access/xlog.h"
 #include "fmgr.h"
 #include "lib/pairingheap.h"
-#include "nodes/relation.h"
+#include "nodes/pathnodes.h"
 
 typedef struct PaseTuple {
   char *ppl_t;  // PasePageList tag

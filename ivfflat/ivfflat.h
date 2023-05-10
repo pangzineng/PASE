@@ -22,7 +22,7 @@
 #include "access/itup.h"
 #include "access/xlog.h"
 #include "access/reloptions.h"
-#include "nodes/relation.h"
+#include "nodes/pathnodes.h"
 #include "catalog/index.h"
 #include "lib/pairingheap.h"
 #include "fmgr.h"

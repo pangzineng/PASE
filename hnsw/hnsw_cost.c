@@ -29,11 +29,7 @@ hnsw_costestimate(PlannerInfo *root, IndexPath *path, double loopCount,
   Selectivity *indexSelectivity, double *indexCorrelation,
   double *indexPages) {
   IndexOptInfo *index = path->indexinfo;
-  List *qinfos;
   GenericCosts costs;
-
-  // Do preliminary analysis of indexquals
-  qinfos = deconstruct_indexquals(path);
 
   MemSet(&costs, 0, sizeof(costs));
 
@@ -41,7 +37,7 @@ hnsw_costestimate(PlannerInfo *root, IndexPath *path, double loopCount,
   costs.numIndexTuples = index->tuples;
 
   // Use generic estimate
-  genericcostestimate(root, path, loopCount, qinfos, &costs);
+  genericcostestimate(root, path, loopCount, &costs);
 
   *indexStartupCost = costs.indexStartupCost;
   *indexTotalCost = costs.indexTotalCost;

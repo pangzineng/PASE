@@ -282,7 +282,7 @@ ivfflat_gettuple(IndexScanDesc scan, ScanDirection dir) {
     if (!pairingheap_is_empty(so->queue)) {
       item = (InvertedListSearchItem*) pairingheap_remove_first(
           so->queue);
-      scan->xs_ctup.t_self = item->heap_ptr;
+      scan->xs_heaptid = item->heap_ptr;
       if (scan->numberOfOrderBys > 0) {
         scan->xs_orderbyvals[0] = Float4GetDatum(item->distance);
         scan->xs_orderbynulls[0] = false;
@@ -297,7 +297,7 @@ ivfflat_gettuple(IndexScanDesc scan, ScanDirection dir) {
     if (!pairingheap_is_empty(so->queue)) {
       item = (InvertedListSearchItem*) pairingheap_remove_first(
           so->queue);
-      scan->xs_ctup.t_self = item->heap_ptr;
+      scan->xs_heaptid = item->heap_ptr;
       if (scan->numberOfOrderBys > 0) {
         scan->xs_orderbyvals[0] = Float4GetDatum(item->distance);
         scan->xs_orderbynulls[0] = false;

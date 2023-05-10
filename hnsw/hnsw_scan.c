@@ -134,7 +134,7 @@ hnsw_gettuple(IndexScanDesc scan, ScanDirection dir) {
       node = (HNSWPriorityQueueNode *)PriorityQueuePop(so->queue);
       FindItDataByOffset(scan->indexRelation, so->data_tup_size,
         node->gid, &itData);
-      scan->xs_ctup.t_self = itData; 
+      scan->xs_heaptid = itData; 
       if (scan->numberOfOrderBys > 0) {
         scan->xs_orderbyvals[0] = Float4GetDatum(node->distance);
         scan->xs_orderbynulls[0] = false;
@@ -149,7 +149,7 @@ hnsw_gettuple(IndexScanDesc scan, ScanDirection dir) {
       node = (HNSWPriorityQueueNode *)PriorityQueuePop(so->queue);
       FindItDataByOffset(scan->indexRelation, so->data_tup_size,
         node->gid, &itData);
-      scan->xs_ctup.t_self = itData;
+      scan->xs_heaptid = itData;
       if (scan->numberOfOrderBys >0) {
         scan->xs_orderbyvals[0] = Float4GetDatum(node->distance);
         scan->xs_orderbynulls[0] = false;

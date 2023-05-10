@@ -17,6 +17,7 @@
 
 #include "access/genam.h"
 #include "access/generic_xlog.h"
+#include "access/tableam.h"
 #include "catalog/index.h"
 #include "miscadmin.h"
 #include "storage/bufmgr.h"
@@ -85,7 +86,7 @@ hnsw_build(Relation heap, Relation index, IndexInfo *indexInfo) {
     "build temporary context", ALLOCSET_DEFAULT_SIZES);
   state = &buildState;
   HNSW_INIT_CACHE_PAGE(HNSWDataPageOpaque, state);
-  reltuples = IndexBuildHeapScan(heap, index, indexInfo, true,
+  reltuples = table_index_build_scan(heap, index, indexInfo, true, false,
                    HNSWBuildCallback, (void *) &buildState, NULL);
   blkid = HNSWFlushCachedPage(index, &buildState);
   buildState.data_entry_blkid = blkid;

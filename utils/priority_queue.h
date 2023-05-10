@@ -32,7 +32,7 @@
 #include "access/xlog.h"
 #include "fmgr.h"
 #include "lib/pairingheap.h"
-#include "nodes/relation.h"
+#include "nodes/pathnodes.h"
 #include "miscadmin.h"
 #include "storage/bufmgr.h"
 

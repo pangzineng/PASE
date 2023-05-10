@@ -26,7 +26,7 @@
 #include "access/xlog.h"
 #include "fmgr.h"
 #include "lib/pairingheap.h"
-#include "nodes/relation.h"
+#include "nodes/pathnodes.h"
 
 #include "utils/pase_hash_table.h"
 #include "utils/pase_page_list.h"

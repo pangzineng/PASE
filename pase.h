@@ -24,7 +24,7 @@
 #include "access/itup.h"
 #include "access/xlog.h"
 #include "fmgr.h"
-#include "nodes/relation.h"
+#include "nodes/pathnodes.h"
 
 #include "hnsw/hnsw.h"
 #include "ivfflat/ivfflat.h"
